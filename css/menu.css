@@ -1,0 +1,311 @@
+/* =========================================================
+   FLAVOUR GALLERY — 3D STACKED SLIDER
+   ========================================================= */
+.page-hero {
+  padding: 20px 0;
+}
+.menu-section {
+  padding: 10px 0;
+}
+.flavour-collection {
+  position: relative;
+  padding: 30px 0;
+  margin-top: 12px;
+}
+.flavour-gallery-heading {
+  margin-bottom: 22px;
+  text-align: center;
+}
+.flavour-gallery-heading .eyebrow-tag {
+  margin-bottom: 6px;
+}
+.flavour-gallery-heading h2 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+}
+.flavour-gallery-heading p:last-child {
+  margin: 7px auto 0;
+  max-width: 480px;
+}
+
+.flavour-gallery {
+  position: relative;
+  height: 660px;
+  margin: 0 auto;
+  max-width: 820px;
+  perspective: 1600px;
+  isolation: isolate;
+}
+.flavour-card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: min(90vw, 660px);
+  height: 620px;
+  padding: 0;
+  border: 0;
+  border-radius: 30px;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateX(-50%) translateZ(-450px) scale(0.72);
+  transition:
+    transform 0.72s cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 0.45s ease,
+    filter 0.55s ease,
+    box-shadow 0.35s ease;
+  opacity: 0;
+  pointer-events: none;
+  text-align: left;
+  transform-style: preserve-3d;
+}
+.flavour-card:focus-visible {
+  outline: 3px solid var(--gold-500);
+  outline-offset: 6px;
+}
+.flavour-card.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 3;
+  transform: translateX(-50%) translateZ(70px) rotateY(0) scale(1);
+  filter: drop-shadow(0 26px 30px rgba(86, 19, 50, 0.28));
+}
+.flavour-card.is-prev,
+.flavour-card.is-next {
+  opacity: 0.74;
+  pointer-events: auto;
+  z-index: 2;
+  filter: brightness(0.78) saturate(0.82);
+}
+.flavour-card.is-prev {
+  transform: translateX(-92%) translateZ(-180px) rotateY(26deg) scale(0.84);
+}
+.flavour-card.is-next {
+  transform: translateX(-8%) translateZ(-180px) rotateY(-26deg) scale(0.84);
+}
+.flavour-card.is-far-left,
+.flavour-card.is-far-right {
+  opacity: 0.18;
+  z-index: 1;
+  filter: blur(1px) brightness(0.68);
+}
+.flavour-card.is-far-left {
+  transform: translateX(-130%) translateZ(-390px) rotateY(34deg) scale(0.67);
+}
+.flavour-card.is-far-right {
+  transform: translateX(30%) translateZ(-390px) rotateY(-34deg) scale(0.67);
+}
+/* ---------- single-face card: media + info body ---------- */
+.flavour-card.is-active {
+  box-shadow: 0 30px 60px -20px rgba(86, 19, 50, 0.42);
+}
+.flavour-media {
+  position: relative;
+  flex: 0 0 480px;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+}
+.flavour-media img {
+  border-radius: 25px;
+  width: 70%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 18px 22px rgba(46, 10, 27, 0.32));
+}
+.flavour-number {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  z-index: 1;
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #fff;
+}
+.flavour-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* gap: 14px; */
+  padding: 15px;
+  background: linear-gradient(
+    180deg,
+    var(--glass-fill-strong),
+    var(--glass-fill)
+  );
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-top: 1px solid var(--glass-border);
+}
+.flavour-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.flavour-title {
+  margin: 0;
+  font: 700 clamp(1.5rem, 2.6vw, 1.95rem) / 1.15 var(--font-display);
+  color: var(--maroon-800);
+}
+.des {
+  display: block;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+.flavour-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(86, 19, 50, 0.18);
+  font-style: normal;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--maroon-600);
+}
+
+.gallery-controls {
+  position: absolute;
+  inset: 50% -44px auto;
+  z-index: 5;
+  pointer-events: none;
+}
+.gallery-arrow {
+  position: absolute;
+  top: 0;
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(86, 19, 50, 0.2);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--maroon-800);
+  box-shadow: 0 8px 22px rgba(86, 19, 50, 0.18);
+  font-size: 1.45rem;
+  pointer-events: auto;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+.gallery-arrow:first-child {
+  left: 0;
+}
+.gallery-arrow:last-child {
+  right: 0;
+}
+.gallery-arrow:hover {
+  background: var(--maroon-800);
+  color: var(--gold-300);
+  transform: scale(1.08);
+}
+
+.flavour-mawa .flavour-media {
+  background: linear-gradient(145deg, #9e632e, #e3bc75);
+}
+.flavour-american .flavour-media {
+  background: linear-gradient(145deg, #d64583, #f3a2bf);
+}
+.flavour-blackcurrant .flavour-media {
+  background: linear-gradient(145deg, #2a1035, #783e73);
+}
+.flavour-mango .flavour-media {
+  background: linear-gradient(145deg, #e87c19, #ffd35a);
+}
+.flavour-choco .flavour-media {
+  background: linear-gradient(145deg, #250d08, #79503e);
+}
+.flavour-roasted .flavour-media {
+  background: linear-gradient(145deg, #70411f, #ce9454);
+}
+.flavour-sitaphal .flavour-media {
+  background: linear-gradient(145deg, #6a8353, #d5d38b);
+}
+.flavour-strawberry .flavour-media {
+  background: linear-gradient(145deg, #b7194f, #fb9eb2);
+}
+.flavour-delight .flavour-media {
+  background: linear-gradient(145deg, #391812, #a65d34);
+}
+.flavour-carnival .flavour-media {
+  background: linear-gradient(145deg, #9c6423, #e7c274);
+}
+.flavour-pineapple .flavour-media {
+  background: linear-gradient(145deg, #a96918, #fff085);
+}
+.menu-booking {
+  text-align: center;
+  margin-top: 30px;
+}
+
+@media (max-width: 820px) {
+  .gallery-controls {
+    inset: 50% -12px auto;
+  }
+  .flavour-card.is-prev {
+    transform: translateX(-88%) translateZ(-180px) rotateY(24deg) scale(0.82);
+  }
+  .flavour-card.is-next {
+    transform: translateX(-12%) translateZ(-180px) rotateY(-24deg) scale(0.82);
+  }
+}
+@media (max-width: 600px) {
+  .flavour-collection {
+    margin-top: 16px;
+  }
+  .flavour-gallery {
+    height: 560px;
+  }
+  .flavour-card {
+    width: 86vw;
+    height: 540px;
+  }
+  .flavour-media {
+    flex-basis: 220px;
+    min-height: 0;
+    padding: 20px;
+  }
+  .flavour-body {
+    padding: 20px 22px 24px;
+    gap: 10px;
+  }
+  .gallery-controls {
+    inset: 49% -4px auto;
+  }
+  .gallery-arrow {
+    width: 46px;
+    height: 46px;
+  }
+  .flavour-card.is-prev {
+    transform: translateX(-82%) translateZ(-180px) rotateY(22deg) scale(0.77);
+  }
+  .flavour-card.is-next {
+    transform: translateX(-18%) translateZ(-180px) rotateY(-22deg) scale(0.77);
+  }
+  .flavour-card.is-far-left,
+  .flavour-card.is-far-right {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flavour-card,
+  .gallery-arrow {
+    transition: none;
+  }
+}
